@@ -1,12 +1,25 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using MultitenantDbPoc.Models;
+using MultitenantDbPoc.Persistence;
 
 namespace MultitenantDbPoc.Controllers;
 
+[ApiController]
+[Route("api/[controller]")]
 public class BooksController : Controller
 {
-    // GET
-    public IActionResult Index()
+    private readonly ApplicationDbContext _dbContext;
+
+    public BooksController(ApplicationDbContext dbContext)
     {
-        return View();
+        _dbContext = dbContext;
+    }
+
+    [HttpGet]
+    [Route("/{institutionId}")]
+    //[HeaderDictionary()]
+    public IActionResult Get(string institutionId)
+    {
+        return Ok(_dbContext.Set<Book>().ToList());
     }
 }

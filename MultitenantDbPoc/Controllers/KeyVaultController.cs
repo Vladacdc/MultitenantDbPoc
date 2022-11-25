@@ -2,11 +2,28 @@
 
 namespace MultitenantDbPoc.Controllers;
 
-public class KeyVault : Controller
+[ApiController]
+[Route("[controller]")]
+public class KeyVaultController : ControllerBase
 {
-    // GET
-    public IActionResult Index()
+    private readonly IConfiguration _configuration;
+
+    public KeyVaultController(IConfiguration configuration)
     {
-        return View();
+        _configuration = configuration;
+    }
+
+    [HttpGet]
+    [Route("secrets")]
+    public IActionResult GetSecrets()
+    {
+        return Ok(_configuration.GetChildren());
+    }
+
+    [HttpGet]
+    [Route("secrets/{name}")]
+    public IActionResult GetSecrets(string name)
+    {
+        return Ok(_configuration[name]);
     }
 }

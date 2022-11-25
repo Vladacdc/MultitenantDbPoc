@@ -1,6 +1,6 @@
 ﻿namespace MultitenantDbPoc.Options;
 
-public class TenantDbInfo
+public class TenantDbConfiguration
 {
     public string Tenant { get; set; }
 
